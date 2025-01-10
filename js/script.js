@@ -1,64 +1,40 @@
-"use strict";
+'use strict'
+const box = document.getElementById('box'),
+    btns = document.getElementsByTagName('button'),
+    circles = document.getElementsByClassName('circle'),
+    hearts = document.querySelectorAll('.heart'),
+    oneHeart = document.querySelector('.heart'),
+    wrapper = document.querySelector('.wrapper');
 
+    // box.style.backgroundColor = 'blue';
+    // box.style.width = '500px';
+    
+    box.style.cssText = 'background-color:blue; width: 500px';
+    btns[1].style.borderRadius = '100%'
+    circles[0].style.backgroundColor = 'red';
 
-const personalMovieDB = {
-    count: 0,
-    movies: {},
-    actors: {},
-    genres: [],
-    private: false,
-    start: function () {
-        personalMovieDB.count = +prompt("how many movies you have seen?", "");
-        while (!personalMovieDB.count || isNaN(personalMovieDB.count)) {
-            personalMovieDB.count = +prompt("how many movies you have seen?", "");
-        }
-    },
-    rememberMyFilms: function () {
-        for (let i = 0; i < personalMovieDB.count; i++) {
-            let movieName = prompt("please write a name of a movie you recently saw (1 - 50 symbols");
-            let movieRate = prompt(`please rate "${movieName}" from 1 to 10`);
-            if (movieName && movieName.length <= 50 && movieRate) {
-                personalMovieDB.movies[movieName] = movieRate;
-                console.log("done");
-            } else {
-                console.log("error");
-                i--;
-            }
-        }
-    },
-    detectPersonalLevel: function () {
-        if (personalMovieDB.count < 2) {
-            console.log("you have to watch more movies");
-        } else if (personalMovieDB.count >= 2 && personalMovieDB.count <= 3) {
-            console.log("you are good movieWatcher");
-        } else if (personalMovieDB.count > 3) {
-            console.log("you are a fantastic!");
-        } else {
-            console.log("something went wrong");
-        }
-    },
-    showMyDB: function () {
-        if (!personalMovieDB.private) {
-            console.log(personalMovieDB);
-        };
-    },
-    writeYourGenres: function () {
-        for (let i = 1; i <= 3; i++) {
-            let genre = prompt(`your favorite genre at number ${i}`);
+    // for(let i = 0; i < hearts.length; i++){
+    //     hearts[i].style.backgroundColor = 'green';
+    // }
+    hearts.forEach(item => {
+        item.style.backgroundColor = "yellow"
+    })
 
-            if (genre === null || genre === "") {
-                console.log("you entered wrong data");
-                i--;
-            }
-            else {
-                personalMovieDB.genres[i - 1] = genre;
-            }
-        }
-        personalMovieDB.genres.forEach((item, i) => {
-            console.log(`favorite genre at number ${i + 1} is ${item}`);
-        });
-    },
-    toggleVisibleMyDB: function () {
-        personalMovieDB.private = personalMovieDB.private === false ? true : false;
-    },
-};
+    const div = document.createElement('div');
+    // const text = document.createTextNode('tut bil ya');
+
+    div.classList.add('black');
+    document.body.append(div)
+    // wrapper.appendChild(div)
+    // wrapper.insertBefore(div,hearts[2]);
+    // wrapper.append(div);
+    // wrapper.prepend(div);
+    // hearts[0].before(div)
+    // hearts[0].after(div)
+    // circles[1].remove();
+    // hearts[1].replaceWith(circles[0])
+
+    div.innerHTML = "<h1>Hello World</h1>";
+    // div.textContent = "Hello"
+    div.insertAdjacentHTML('', <h2>Hello</h2>)
+
