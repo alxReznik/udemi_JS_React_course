@@ -35,13 +35,14 @@ document.body.append(div)
 // hearts[1].replaceWith(circles[0])
 
 div.innerHTML = "<h1>Hello World</h1>";
-// div.textContent = "Hello"
-div.insertAdjacentHTML('', <h2>Hello</h2>)
+div.insertAdjacentHTML('beforeend', '<div style="color:black;">שלום</div>');
 
 oneHeart.addEventListener('click', () => {
     changeBackgroundColor(oneHeart);
 })
 
 function changeBackgroundColor(element) {
-    element.style.backgroundColor = "yellow";
+    const currentColor = getComputedStyle(element).backgroundColor;
+    let color = currentColor === 'rgb(255, 255, 255)' ? 'black' : 'white';
+    element.style.backgroundColor = `${color}`;
 }
