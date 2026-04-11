@@ -1,64 +1,88 @@
-"use strict";
+/* Задания на урок:
 
+V__1) Удалить все рекламные блоки со страницы (правая часть сайта)
 
-const personalMovieDB = {
-    count: 0,
-    movies: {},
-    actors: {},
-    genres: [],
-    private: false,
-    start: function () {
-        personalMovieDB.count = +prompt("how many movies you have seen?", "");
-        while (!personalMovieDB.count || isNaN(personalMovieDB.count)) {
-            personalMovieDB.count = +prompt("how many movies you have seen?", "");
-        }
-    },
-    rememberMyFilms: function () {
-        for (let i = 0; i < personalMovieDB.count; i++) {
-            let movieName = prompt("please write a name of a movie you recently saw (1 - 50 symbols");
-            let movieRate = prompt(`please rate "${movieName}" from 1 to 10`);
-            if (movieName && movieName.length <= 50 && movieRate) {
-                personalMovieDB.movies[movieName] = movieRate;
-                console.log("done");
-            } else {
-                console.log("error");
-                i--;
-            }
-        }
-    },
-    detectPersonalLevel: function () {
-        if (personalMovieDB.count < 2) {
-            console.log("you have to watch more movies");
-        } else if (personalMovieDB.count >= 2 && personalMovieDB.count <= 3) {
-            console.log("you are good movieWatcher");
-        } else if (personalMovieDB.count > 3) {
-            console.log("you are a fantastic!");
-        } else {
-            console.log("something went wrong");
-        }
-    },
-    showMyDB: function () {
-        if (!personalMovieDB.private) {
-            console.log(personalMovieDB);
-        };
-    },
-    writeYourGenres: function () {
-        for (let i = 1; i <= 3; i++) {
-            let genre = prompt(`your favorite genre at number ${i}`);
+V__2) Изменить жанр фильма, поменять "комедия" на "драма"
 
-            if (genre === null || genre === "") {
-                console.log("you entered wrong data");
-                i--;
-            }
-            else {
-                personalMovieDB.genres[i - 1] = genre;
-            }
-        }
-        personalMovieDB.genres.forEach((item, i) => {
-            console.log(`favorite genre at number ${i + 1} is ${item}`);
-        });
-    },
-    toggleVisibleMyDB: function () {
-        personalMovieDB.private = personalMovieDB.private === false ? true : false;
-    },
+V__3) Изменить задний фон постера с фильмом на изображение "bg.jpg". Оно лежит в папке img.
+    Реализовать только при помощи JS
+
+V__4) Список фильмов на странице сформировать на основании данных из этого JS файла.
+    Отсортировать их по алфавиту 
+
+V__5) Добавить нумерацию выведенных фильмов */
+
+'use strict';
+
+const movieDB = {
+    movies: [
+        "La la land",
+        "Скотт Пилигрим против...",
+        "Логан",
+        "Лига справедливости",
+        "Одержимость",
+    ]
 };
+
+const adv = document.querySelectorAll('.promo__adv img'),
+    poster = document.querySelector('.promo__bg'),
+    genre = poster.querySelector('.promo__genre'),
+    movieList = document.querySelector('.promo__interactive-list');
+
+adv.forEach(item => {
+    item.remove();
+})
+
+poster.style.backgroundImage = "url(../img/bg.jpg)";
+genre.textContent = "драма";
+movieList.innerHTML = "";
+movieDB.movies.sort();
+
+movieDB.movies.forEach((film, i) => {
+    movieList.innerHTML += `
+    <li class="promo__interactive-item">${i + 1}. ${film}
+    <div class="delete"></div>
+    </li>`;
+})
+
+// displaySortedMovieList(movieDB.movies, '.promo__interactive-list');
+// removeElement('.promo__adv');
+// const promoContentDiv = document.querySelector('.promo__content');
+// promoContentDiv.style.width = "calc(100% - 300px";
+// changeElementInnerHTML('.promo__bg .promo__genre', "драма");
+// displayMoviesList(movieDB.movies, '.promo__interactive-list');
+
+function changeElementInnerHTML(selector, text) {
+    const element = document.querySelector(selector);
+    if (element) {
+        element.innerHTML = text;
+    }
+}
+
+function hideElement(selector) {
+    let targetElement = document.querySelector(selector);
+    targetElement.style.display = "none";
+}
+
+function removeElement(selector) {
+    const targetElement = document.querySelector(selector);
+    if (targetElement) {
+        targetElement.remove();
+    }
+}
+
+function displaySortedMovieList(movieList, container) {
+    const moviesContainer = document.querySelector(container);
+    if (moviesContainer) {
+        moviesContainer.innerHTML = "";
+    }
+
+    const sortedList = movieList.sort();
+
+    sortedList.forEach((movieTitle, i) => {
+        const li = document.createElement("li");
+        li.classList.add("promo__interactive-item");
+        li.textContent = `${++i} .${movieTitle}`;
+        moviesContainer.appendChild(li);
+    })
+}
